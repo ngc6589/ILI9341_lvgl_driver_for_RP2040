@@ -24,13 +24,13 @@ void ili9341_setRotate(uint rot);
 
 void ili9341_SetWindow(uint x, uint y, uint w, uint h);
 
-void lcd_Flash_CB(lv_disp_t *disp, const lv_area_t *area, lv_color_t *buf);
+void lcd_Flash_CB(lv_disp_t *disp, const lv_area_t *area, unsigned char *buf);
 
 void lcd_Send_Color_DMA(void *buf, uint16_t length);
 
-lv_coord_t lcd_Get_Width(void);
+uint lcd_Get_Width(void);
 
-lv_coord_t lcd_Get_height(void);
+uint lcd_Get_height(void);
 
 #endif
 

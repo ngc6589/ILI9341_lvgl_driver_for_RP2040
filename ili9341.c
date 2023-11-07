@@ -122,7 +122,7 @@ dma_channel_config c;
 
 void ili9341_Init(uint rot)
 {
-        // // Get a free channel, panic() if there are none
+        // Get a free channel, panic() if there are none
         int chan = dma_claim_unused_channel(true);
         c = dma_channel_get_default_config(dmaChannel);
         channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
@@ -297,13 +297,18 @@ void ili9341_SetWindow(uint x, uint y, uint w, uint h)
         ili9341_SendData(cmd, buf4, 4);
 }
 
-void lcd_Flash_CB(lv_disp_t * disp, const lv_area_t * area, lv_color_t * buf)
+void lcd_Flash_CB(lv_disp_t * disp, const lv_area_t * area, unsigned char * buf)
 {
         uint8_t cmd = 0x2C;
         uint x1, y1;
         x1 = area->x1;
         y1 = area->y1;
         uint32_t size = lv_area_get_width(area) * lv_area_get_height(area);
+        /*
+         * Reverse buffer data 
+         */
+        lv_draw_sw_rgb565_swap((void *) buf, size);
+
         /* 
          *  transfer pixel data via DMA function
          */
@@ -327,7 +332,7 @@ void lcd_Flash_CB(lv_disp_t * disp, const lv_area_t * area, lv_color_t * buf)
         /* 
          *  transfer pixel data via DMA function
          */
-        lcd_Send_Color_DMA((void *) buf,  size*2);
+        lcd_Send_Color_DMA((void *) buf,  size * 2);
         lv_disp_flush_ready(disp);
 }
 
@@ -343,12 +348,12 @@ void lcd_Send_Color_DMA(void * buf, uint16_t length)
         );
 }
 
-lv_coord_t lcd_Get_Width()
+uint lcd_Get_Width()
 {
         return(ili9341_resolution.width);
 }
 
-lv_coord_t lcd_Get_height()
+uint lcd_Get_height()
 {
         return(ili9341_resolution.height);
 }
