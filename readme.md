@@ -29,7 +29,9 @@ pico-example の中にある software spi のサンプル PIO ファイルです
 を追記する
 
 `#define LV_COLOR_DEPTH 16`
+
 `#define LV_MEM_SIZE (48 * 1024U)          /*[bytes]*/`
+
 `#define  LV_LAYER_MAX_MEMORY_USAGE             16       /*[kB]*/`
 
 を確認する
