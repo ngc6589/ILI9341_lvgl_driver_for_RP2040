@@ -63,5 +63,5 @@ target_link_libraries(lcdTest
         )
 
 pico_add_extra_outputs(lcdTest)
-#set(LV_CONF_BUILD_DISABLE_THORVG_INTERNAL 1)
+set(LV_CONF_BUILD_DISABLE_THORVG_INTERNAL 1)
 add_subdirectory(lvgl)
