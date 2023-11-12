@@ -48,3 +48,23 @@ MSYS2 Mingw64 でビルドするときは -G "MSYS Makefiles" を追記する
 です。
 
 lvgl ライブラリを add_subdirectory しているだけの環境なので難しくはないと思います。
+
+2023/11/12 追記
+
+8cf0bbb - feat(draw): add implements vector graphic APIs (#4528) (#4691)
+
+で、機能追加がありましたが、エラーになります。CmakeLists.txt でこれをコンパイルしないよう Disable に暫定対応しています。
+
+```
+[ 47%] Building CXX object lvgl/CMakeFiles/lvgl_thorvg.dir/src/libs/thorvg/tvgAnimation.cpp.obj
+In file included from C:/msys64/home/masahiro/work/ILI9341_lvgl_driver_for_RP2040/lvgl/src/libs/thorvg/tvgAnimation.cpp:23:
+c:\msys64\home\masahiro\work\ili9341_lvgl_driver_for_rp2040\lvgl\src\lv_conf_internal.h:41:18: fatal error: ../../lv_conf.h: No such file or directory
+   41 |         #include "../../lv_conf.h"                /*Else assume lv_conf.h is next to the lvgl folder*/
+      |                  ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [lvgl/CMakeFiles/lvgl_thorvg.dir/build.make:76: lvgl/CMakeFiles/lvgl_thorvg.dir/src/libs/thorvg/tvgAnimation.cpp.obj] Error 1
+make[1]: *** [CMakeFiles/Makefile2:1770: lvgl/CMakeFiles/lvgl_thorvg.dir/all] Error 2
+make: *** [Makefile:136: all] Error 2
+
+```
+
