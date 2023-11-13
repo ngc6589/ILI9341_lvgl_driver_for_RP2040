@@ -63,10 +63,7 @@ target_link_libraries(lcdTest
         )
 
 pico_add_extra_outputs(lcdTest)
-# Specify path to own LVGL config header
-#set(LV_CONF_PATH
-#    ${CMAKE_CURRENT_SOURCE_DIR}/lvgl/lv_conf.h
-#    CACHE STRING "" FORCE)
+
 set(LV_CONF_BUILD_DISABLE_THORVG_INTERNAL 1)
 set(LV_CONF_BUILD_DISABLE_EXAMPLES 1)
 set(LV_CONF_BUILD_DISABLE_DEMOS 1)
