@@ -1,11 +1,6 @@
 #ifndef ILI9341_H
 #define ILI9341_H
 #include "lvgl.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define LCD_PORTRAIT 0
 #define LCD_LANDSCAPE 1
 #define LCD_INV_PORTRAIT 2
@@ -37,8 +32,5 @@ uint lcd_Get_Width(void);
 
 uint lcd_Get_height(void);
 
-#ifdef __cplusplus
-}
-#endif
 #endif
 

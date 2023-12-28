@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
-#include "hardware/i2c.h"
 #include "hardware/dma.h"
 #include "hardware/pio.h"
 #include "ili9341.h"
@@ -24,7 +23,7 @@ int main()
     lv_display_set_flush_cb(disp, lcd_Flash_CB);
     lv_display_set_draw_buffers(disp, buf1, buf2, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
     screen = lv_obj_create(NULL);
-
+    
     lv_indev_t *indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, xpt2046_read_cb);
@@ -37,7 +36,6 @@ int main()
         lv_timer_handler();
         lv_tick_inc(5);
     }
-
     return 0;
 }
 
@@ -62,7 +60,7 @@ void lv_example_button_1(void)
     lv_obj_t *label;
 
     lv_obj_t *btn1 = lv_button_create(screen);
-    lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, NULL);
+    lv_obj_add_event(btn1, event_handler, LV_EVENT_ALL, NULL);
     lv_obj_align(btn1, LV_ALIGN_CENTER, 0, -40);
     lv_obj_remove_flag(btn1, LV_OBJ_FLAG_PRESS_LOCK);
     lv_obj_set_width(btn1, 122);
@@ -78,4 +76,16 @@ void lv_example_button_1(void)
     label = lv_label_create(btn1);
     lv_label_set_text(label, "Button");
     lv_obj_center(label);
+
+    /*
+        lv_obj_t * btn2 = lv_button_create(screen);
+        lv_obj_add_event(btn2, event_handler, LV_EVENT_ALL, NULL);
+        lv_obj_align(btn2, LV_ALIGN_CENTER, 0, 40);
+        lv_obj_add_flag(btn2, LV_OBJ_FLAG_CHECKABLE);
+        lv_obj_set_height(btn2, LV_SIZE_CONTENT);
+
+        label = lv_label_create(btn2);
+        lv_label_set_text(label, "Toggle");
+        lv_obj_center(label);
+    */
 }
