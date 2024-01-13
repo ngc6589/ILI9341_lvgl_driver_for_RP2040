@@ -214,14 +214,14 @@ void xpt2046_read_cb(lv_indev_t * indev, lv_indev_data_t * data)
         uint16_t posY;
         if(xpt2046_Pos(&posX, &posY) == -1)
         {
-                data->point.x = 0;
-                data->point.y = 0;
-                data->state = 0;
+                // data->point.x = 0;
+                // data->point.y = 0;
+                data->state = LV_INDEV_STATE_RELEASED;
         }
         else
         {
                 data->point.x = posX;
                 data->point.y = posY;
-                data->state = 1;
+                data->state = LV_INDEV_STATE_PRESSED;
         }
 }
