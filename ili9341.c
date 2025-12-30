@@ -117,14 +117,14 @@ ili9341_ini_str_t lcd_ini_str[] = {
         uint height;
 } ili9341_resolution;
 
-int dmaChannel;
+int lcdDmaChannel;
 dma_channel_config c;
 
 void ili9341_Init(uint rot)
 {
         // Get a free channel, panic() if there are none
-        int chan = dma_claim_unused_channel(true);
-        c = dma_channel_get_default_config(dmaChannel);
+        lcdDmaChannel = dma_claim_unused_channel(true);
+        c = dma_channel_get_default_config(lcdDmaChannel);
         channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
         channel_config_set_dreq(&c, DREQ_SPI1_TX);
         channel_config_set_read_increment(&c, true);
@@ -314,7 +314,7 @@ void lcd_Flash_CB(lv_disp_t * disp, const lv_area_t * area, unsigned char * buf)
          */
         while(1)
         {
-                bool a = dma_channel_is_busy(dmaChannel);
+                bool a = dma_channel_is_busy(lcdDmaChannel);
                 if(a == false)  break;
         }
         ili9341_SetWindow(x1, y1, lv_area_get_width(area), lv_area_get_height(area));
@@ -339,7 +339,7 @@ void lcd_Flash_CB(lv_disp_t * disp, const lv_area_t * area, unsigned char * buf)
 void lcd_Send_Color_DMA(void * buf, uint16_t length)
 {
         dma_channel_configure(
-                dmaChannel,             // Channel to be configured
+                lcdDmaChannel,          // Channel to be configured
                 &c,                     // The configuration we just created
                 &spi_get_hw(LCD_SPI_PORT)->dr,                    // The initial write address
                 buf,                    // The initial read address
